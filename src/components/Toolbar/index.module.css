@@ -1,0 +1,16 @@
+.ToolbarContainer {
+    @apply flex justify-center bg-gray-800 p-2 rounded-lg shadow-md mx-auto mt-4 w-max;
+  }
+  
+  .Toolbaritem {
+    @apply flex justify-center items-center text-white w-10 h-10 mx-2 rounded cursor-pointer transition-all duration-300 ease-in-out;
+  }
+  
+  .Toolbaritem:hover {
+    @apply bg-gray-700;
+  }
+  
+  .Toolbaritem.active {
+    @apply bg-blue-600;
+  }
+  
