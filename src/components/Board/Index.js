@@ -2,6 +2,7 @@ import React, { useContext, useLayoutEffect } from 'react'
 import { useEffect, useRef } from "react";
 import rough from 'roughjs';
 import BoardContext from '../../store/board-context';
+import "./Index.module.css"
 
 const Board = () => {
 
@@ -46,7 +47,7 @@ const Board = () => {
     }
 
   return (
-    <div>
+    <div className='Board'>
           <canvas ref={canvasRef} onMouseDown={(event)=>MouseDownHandler(event)} onMouseMove={(event)=>MouseMoveHandler(event)} onMouseUp={MouseUpHandler}/>
     </div>
   )

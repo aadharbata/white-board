@@ -1,16 +1,21 @@
 .ToolbarContainer {
-    @apply flex justify-center bg-gray-800 p-2 rounded-lg shadow-md mx-auto mt-4 w-max z-10;
-  }
-  
-  .Toolbaritem {
-    @apply flex justify-center items-center text-white w-10 h-10 mx-2 rounded cursor-pointer transition-all duration-300 ease-in-out;
-  }
-  
-  .Toolbaritem:hover {
-    @apply bg-gray-700;
-  }
-  
-  .Toolbaritem.active {
-    @apply bg-blue-600;
-  }
-  
+  @apply flex justify-center bg-gray-800 p-2 rounded-lg shadow-md w-max z-10;
+  position: absolute;
+  top: 10px; /* Adjust the value to position the toolbar vertically */
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none; /* Disable pointer events for the container */
+}
+
+.Toolbaritem {
+  @apply flex justify-center items-center text-white w-10 h-10 mx-2 rounded cursor-pointer transition-all duration-300 ease-in-out;
+  pointer-events: auto; /* Enable pointer events for the individual items */
+}
+
+.Toolbaritem:hover {
+  @apply bg-gray-700;
+}
+
+.Toolbaritem.active {
+  @apply bg-blue-600;
+}
