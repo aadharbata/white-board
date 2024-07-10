@@ -1,5 +1,5 @@
 .ToolbarContainer {
-    @apply flex justify-center bg-gray-800 p-2 rounded-lg shadow-md mx-auto mt-4 w-max;
+    @apply flex justify-center bg-gray-800 p-2 rounded-lg shadow-md mx-auto mt-4 w-max z-10;
   }
   
   .Toolbaritem {

@@ -6,13 +6,14 @@ import BoardContext from '../../store/board-context';
 const Board = () => {
 
     const canvasRef = useRef();
-    const {elements,BoardMouseDownHandler}=useContext(BoardContext);
+    const {elements,BoardMouseDownHandler,BoardMouseMoveHandler,toolState,BoardMouseUpHandler}=useContext(BoardContext);
 
     useEffect(() => {
 
         const canvas=canvasRef.current; 
         canvas.height=window.innerHeight;
         canvas.width=window.innerWidth;     
+        
     }, []);
 
     useEffect(()=>{
@@ -29,11 +30,24 @@ const Board = () => {
       };
 
     },[elements]);
-  
+    
+    const MouseDownHandler=(event)=>{
+        BoardMouseDownHandler(event);
+    }
+
+    const MouseMoveHandler=(event)=>{
+       if(toolState==="DRAWING"){
+          BoardMouseMoveHandler(event);
+       }
+    }
+
+    const MouseUpHandler=()=>{
+        BoardMouseUpHandler();
+    }
 
   return (
     <div>
-          <canvas ref={canvasRef} onMouseDown={(event)=>BoardMouseDownHandler(event)} />
+          <canvas ref={canvasRef} onMouseDown={(event)=>MouseDownHandler(event)} onMouseMove={(event)=>MouseMoveHandler(event)} onMouseUp={MouseUpHandler}/>
     </div>
   )
 }
