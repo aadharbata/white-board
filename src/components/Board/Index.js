@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useLayoutEffect } from 'react'
 import { useEffect, useRef } from "react";
 import rough from 'roughjs';
 import BoardContext from '../../store/board-context';
@@ -16,7 +16,7 @@ const Board = () => {
         
     }, []);
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
 
       const canvas=canvasRef.current; 
       const context = canvas.getContext("2d");

@@ -1,11 +1,10 @@
 import React, { useReducer } from 'react';
 import BoardContext from './board-context';
-import rough from 'roughjs/bin/rough';
+import { CreateElement } from '../utils/CreateElement';
 
-const gen = rough.generator();
 
 const initialBoardstate = {
-  activetool: '',
+  activetool: 'Line',
   toolState: 'NONE',
   elements: [],
 };
@@ -20,14 +19,14 @@ const BoardReducers = (state, action) => {
     }
     case 'DROP_DOWN': {
       const { clientX, clientY } = action.payload;
-      const newElement = {
-        id: state.elements.length,
-        x1: clientX,
-        y1: clientY,
-        x2: clientX,
-        y2: clientY,
-        roughElement: gen.line(clientX, clientY - 71, clientX, clientY - 71),
-      };
+      const newElement = CreateElement(
+        state.elements.length,
+        clientX,
+        clientY,
+        clientX,
+        clientY,
+        { type: state.activetool }
+      );
       return {
         ...state,
         toolState: 'DRAWING',
@@ -38,14 +37,11 @@ const BoardReducers = (state, action) => {
       const { clientX, clientY } = action.payload;
       const newElements = [...state.elements];
       const index = state.elements.length - 1;
-      newElements[index].x2 = clientX;
-      newElements[index].y2 = clientY;
-      newElements[index].roughElement = gen.line(
-        newElements[index].x1,
-        newElements[index].y1 - 71,
-        clientX,
-        clientY - 71
-      );
+      const { x1, y1 } = newElements[index];
+      const newElement = CreateElement(index, x1, y1, clientX, clientY, {
+        type: state.activetool,
+      });
+      newElements[index] = newElement;
       return {
         ...state,
         elements: newElements,
