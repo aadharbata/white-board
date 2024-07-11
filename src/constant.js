@@ -1,4 +1,4 @@
-import { FaSlash, FaRegCircle, FaLongArrowAltRight, FaDownload,FaPaintBrush } from 'react-icons/fa';
+import { FaSlash, FaRegCircle, FaLongArrowAltRight,FaPaintBrush } from 'react-icons/fa';
 import { LuRectangleHorizontal } from 'react-icons/lu';
 import { MdOutlineFormatColorText } from 'react-icons/md';
 import { FaEraser } from 'react-icons/fa6';
@@ -13,8 +13,7 @@ const toolItems = [
     { item: 'Text', element: MdOutlineFormatColorText },
     { item: 'Eraser', element: FaEraser },
     { item: 'Undo', element: IoMdUndo },
-    { item: 'Redo', element: IoMdRedo },
-    { item: 'Download', element: FaDownload },
+    { item: 'Redo', element: IoMdRedo }
   ];
 
 export default toolItems;

@@ -3,8 +3,9 @@ import rough from 'roughjs';
 import BoardContext from '../../store/board-context';
 import "./Index.module.css";
 import ToolBoxContext from '../../store/toolbox-context';
+import html2canvas from 'html2canvas';
 
-const Board = () => {
+const Board = ({download,set}) => {
 
     const canvasRef = useRef();
     const { elements, BoardMouseDownHandler, BoardMouseMoveHandler, toolState, BoardMouseUpHandler } = useContext(BoardContext);
@@ -47,7 +48,23 @@ const Board = () => {
 
     const MouseUpHandler = () => {
         BoardMouseUpHandler();
+    } 
+
+    if(download){
+      const handleCaptureClick = async () => {
+        if (canvasRef.current) {
+          const canvas = await html2canvas(canvasRef.current);
+          const dataUrl = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = 'screenshot.png';
+          link.click();
+        }
+      };
+      handleCaptureClick();
+      set();
     }
+    
 
     return (
         <div>

@@ -3,8 +3,9 @@ import classes from './index.module.css';
 import toolItems from '../../constant';
 import cx from 'classnames';
 import BoardContext from '../../store/board-context';
+import { FaDownload } from "react-icons/fa";
 
-const Toolbar = () => {
+const Toolbar = ({download}) => {
   
   const {active_tool,handleActiveTool}=useContext(BoardContext);
 
@@ -22,6 +23,10 @@ const Toolbar = () => {
           </div>
         );
       })}
+          <div className={classes.Toolbaritem} onClick={()=>download()}>
+            <FaDownload/>
+          </div>
+
     </div>
   );
 };
