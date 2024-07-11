@@ -57,7 +57,7 @@ const Board = ({download,set}) => {
           const dataUrl = canvas.toDataURL('image/png');
           const link = document.createElement('a');
           link.href = dataUrl;
-          link.download = 'screenshot.png';
+          link.download = 'canvas.png';
           link.click();
         }
       };
