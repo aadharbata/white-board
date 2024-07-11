@@ -20,6 +20,9 @@ const toolItems = [
 
 export default toolItems;
 
+export const STROKE_ACTIONS=["Line","Rectangle","Circle","Arrow"];
+
+export const FILL_COLOR=["Rectangle","Circle"];
 export const boardActions={
 
      MOUSE_DOWN:"MOUSE_DOWN",
@@ -35,3 +38,5 @@ export const COLORS = {
   YELLOW: "#ffff00",
   WHITE: "#ffffff",
 };
+
+export const SIZE_TOOL=["Line","Rectangle","Circle","Arrow"];

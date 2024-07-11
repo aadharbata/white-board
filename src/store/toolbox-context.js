@@ -2,7 +2,9 @@ import { createContext } from "react";
 
 const ToolBoxContext=createContext({
     ToolBoxState:{},
-    ColorChangeTool:()=>{}
+    ColorStrokeTool:()=>{},
+    ColorFillTool:()=>{},
+    ChangeSizeTool: ()=>{}
 });
 
 export default ToolBoxContext;

@@ -3,12 +3,13 @@ import { useEffect, useRef } from "react";
 import rough from 'roughjs';
 import BoardContext from '../../store/board-context';
 import "./Index.module.css"
+import ToolBoxContext from '../../store/toolbox-context';
 
 const Board = () => {
 
     const canvasRef = useRef();
     const {elements,BoardMouseDownHandler,BoardMouseMoveHandler,toolState,BoardMouseUpHandler}=useContext(BoardContext);
-
+    const {ToolBoxState}=useContext(ToolBoxContext);
     useEffect(() => {
 
         const canvas=canvasRef.current; 
@@ -33,12 +34,12 @@ const Board = () => {
     },[elements]);
     
     const MouseDownHandler=(event)=>{
-        BoardMouseDownHandler(event);
+        BoardMouseDownHandler(event,ToolBoxState);
     }
 
     const MouseMoveHandler=(event)=>{
        if(toolState==="DRAWING"){
-          BoardMouseMoveHandler(event);
+          BoardMouseMoveHandler(event,ToolBoxState);
        }
     }
 
@@ -47,7 +48,7 @@ const Board = () => {
     }
 
   return (
-    <div className='Board'>
+    <div>
           <canvas ref={canvasRef} onMouseDown={(event)=>MouseDownHandler(event)} onMouseMove={(event)=>MouseMoveHandler(event)} onMouseUp={MouseUpHandler}/>
     </div>
   )

@@ -13,7 +13,24 @@ const ToolBoxReducers=(state,action)=>{
                 stroke: action.payload.color,
               },
         };
-    
+      case "CHANGE_FILL":{
+        return {
+            ...state,
+            [action.payload.tool]: {
+              ...state[action.payload.tool],
+              fill: action.payload.fill,
+            }
+        }
+      }
+      case "CHANGE_SIZE":{
+        return {
+            ...state,
+            [action.payload.tool]: {
+              ...state[action.payload.tool],
+              size: action.payload.size,
+            }
+        }
+      }
         default:
             break;
     }
@@ -55,11 +72,33 @@ const ToolBoxContextProvider = ({children}) => {
             }
         })
     }
+    const ChangeFillColorHandler=(tool,fill)=>{
+        dispatchToolBoxActions({
+            type: "CHANGE_FILL",
+            payload:{
+                tool,
+                fill
+            }
+        })
+    }
+
+  const HandleBrushSize=(tool,size)=>{
+        dispatchToolBoxActions({
+            type:"CHANGE_SIZE",
+            payload:{
+                tool,
+                size
+            }
+        })
+  }
 
   const ToolBoxContextValue={
         ToolBoxState:toolBoxState,
-        ColorChangeTool: ChangeColorHandler
+        ColorStrokeTool: ChangeColorHandler,
+        ColorFillTool: ChangeFillColorHandler,
+        ChangeSizeTool: HandleBrushSize
   };
+
 
   return (
     <ToolBoxContext.Provider value={ToolBoxContextValue}>

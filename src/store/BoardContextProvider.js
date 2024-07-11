@@ -2,7 +2,6 @@ import React, { useReducer } from 'react';
 import BoardContext from './board-context';
 import { CreateElement } from '../utils/CreateElement';
 
-
 const initialBoardstate = {
   activetool: 'Line',
   toolState: 'NONE',
@@ -18,14 +17,21 @@ const BoardReducers = (state, action) => {
       };
     }
     case 'DROP_DOWN': {
-      const { clientX, clientY } = action.payload;
+      const { clientX, clientY, toolbox } = action.payload;
+      console.log(toolbox);
+      const type = {
+        type: state.activetool,
+        stroke: toolbox[state.activetool]?.stroke,
+        fill : toolbox[state.activetool]?.fill,
+        size: toolbox[state.activetool]?.size
+      };
       const newElement = CreateElement(
         state.elements.length,
         clientX,
         clientY,
         clientX,
         clientY,
-        { type: state.activetool }
+        type
       );
       return {
         ...state,
@@ -34,12 +40,16 @@ const BoardReducers = (state, action) => {
       };
     }
     case 'MOUSE_MOVE': {
-      const { clientX, clientY } = action.payload;
+      const { clientX, clientY, toolbox } = action.payload;
+      console.log(toolbox);
       const newElements = [...state.elements];
       const index = state.elements.length - 1;
       const { x1, y1 } = newElements[index];
       const newElement = CreateElement(index, x1, y1, clientX, clientY, {
         type: state.activetool,
+        stroke: toolbox[state.activetool]?.stroke,
+        fill: toolbox[state.activetool]?.fill,
+        size: toolbox[state.activetool]?.size
       });
       newElements[index] = newElement;
       return {
@@ -68,21 +78,21 @@ const BoardContextProvider = ({ children }) => {
     });
   };
 
-  const BoardMouseDownHandler = (event) => {
+  const BoardMouseDownHandler = (event, toolbox) => {
     const { clientX, clientY } = event;
 
     dispatchBoardActions({
       type: 'DROP_DOWN',
-      payload: { clientX, clientY },
+      payload: { clientX, clientY, toolbox },
     });
   };
 
-  const BoardMouseMoveHandler = (event) => {
+  const BoardMouseMoveHandler = (event, toolbox) => {
     const { clientX, clientY } = event;
-
+    console.log(toolbox);
     dispatchBoardActions({
       type: 'MOUSE_MOVE',
-      payload: { clientX, clientY },
+      payload: { clientX, clientY, toolbox },
     });
   };
 

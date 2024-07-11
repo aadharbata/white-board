@@ -8,8 +8,9 @@ function App() {
 
   return (
     <div className="App">
+       
       <BoardContextProvider>
-        <ToolBoxContextProvider>
+      <ToolBoxContextProvider>
             <Toolbar/>
             <Board/>  
             <ToolBox/>
