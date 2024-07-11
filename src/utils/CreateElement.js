@@ -35,6 +35,16 @@ export const CreateElement = (id, x1, y1, x2, y2, { type,stroke,fill,size }) => 
       };
       return brushElement;
     }
+    case "Eraser":{
+      const eraseElement = {
+        id,
+        points: [{ x: x1, y: y1 }],
+        path: new Path2D(getSvgPathFromStroke(getStroke([{ x: x1, y: y1 }],{size:50}))),
+        type,
+        stroke
+      };
+      return eraseElement;
+    }
     case "Line":
       element.roughElement = gen.line(x1, y1, x2, y2, options);
       return element;

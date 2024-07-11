@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import cx from "classnames";
 import classes from "./index.module.css";
-import { COLORS } from "../../constant";
+import { COLORS, TOOL_BOX } from "../../constant";
 import BoardContext from "../../store/board-context";
 import ToolBoxContext from "../../store/toolbox-context";
 import { STROKE_ACTIONS } from "../../constant";
@@ -17,7 +17,8 @@ const Toolbox = () => {
   const size=ToolBoxState[active_tool]?.size;
 
   return (
-    <div className={classes.container}>
+    TOOL_BOX.includes(active_tool)&&
+     <div className={classes.container}>
       {STROKE_ACTIONS.includes(active_tool) &&<div className={classes.selectOptionContainer}>
         
         <div className={classes.toolBoxLabel}>Stroke</div>
@@ -70,7 +71,7 @@ const Toolbox = () => {
         </div>
       )}
     </div>
-  );
+    );
 };
 
 export default Toolbox;

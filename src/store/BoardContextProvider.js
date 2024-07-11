@@ -5,7 +5,7 @@ import getStroke from 'perfect-freehand';
 import { CreateElement } from '../utils/CreateElement';
 
 const initialBoardState = {
-    activetool: 'Line',
+    activetool: 'Pencil',
     toolState: 'NONE',
     elements: [],
 };
@@ -19,11 +19,12 @@ const BoardReducers = (state, action) => {
             };
         case 'DROP_DOWN': {
             const { clientX, clientY, toolbox } = action.payload;
+            const toolSettings = toolbox[state.activetool] || {};
             const type = {
                 type: state.activetool,
-                stroke: toolbox[state.activetool]?.stroke,
-                fill: toolbox[state.activetool]?.fill,
-                size: toolbox[state.activetool]?.size
+                stroke: toolSettings.stroke,
+                fill: toolSettings.fill,
+                size: toolSettings.size
             };
             const newElement = CreateElement(
                 state.elements.length,
@@ -44,7 +45,8 @@ const BoardReducers = (state, action) => {
             const newElements = [...state.elements];
             const index = state.elements.length - 1;
             const { x1, y1 } = newElements[index];
-            if (state.activetool === "Pencil") {
+            
+            if (state.activetool === "Pencil" ) {
                 newElements[index].points = [
                     ...newElements[index].points,
                     { x: clientX, y: clientY }
@@ -52,23 +54,30 @@ const BoardReducers = (state, action) => {
                 newElements[index].path = new Path2D(
                     getSvgPathFromStroke(getStroke(newElements[index].points))
                 );
-                return {
-                    ...state,
-                    elements: newElements
-                };
-            } else {
+            } 
+            else if(state.activetool==="Eraser"){
+              newElements[index].points = [
+                ...newElements[index].points,
+                { x: clientX, y: clientY }
+            ];
+            newElements[index].path = new Path2D(
+                getSvgPathFromStroke(getStroke(newElements[index].points,{size:50}))
+            );
+            } 
+            else {
+                const toolSettings = toolbox[state.activetool] || {};
                 const newElement = CreateElement(index, x1, y1, clientX, clientY, {
                     type: state.activetool,
-                    stroke: toolbox[state.activetool]?.stroke,
-                    fill: toolbox[state.activetool]?.fill,
-                    size: toolbox[state.activetool]?.size
+                    stroke: toolSettings.stroke,
+                    fill: toolSettings.fill,
+                    size: toolSettings.size
                 });
                 newElements[index] = newElement;
-                return {
-                    ...state,
-                    elements: newElements,
-                };
             }
+            return {
+                ...state,
+                elements: newElements
+            };
         }
         case 'MOUSE_UP':
             return {
@@ -101,7 +110,6 @@ const BoardContextProvider = ({ children }) => {
 
     const BoardMouseMoveHandler = (event, toolbox) => {
         const { clientX, clientY } = event;
-        console.log(toolbox);
         dispatchBoardActions({
             type: 'MOUSE_MOVE',
             payload: { clientX, clientY, toolbox },

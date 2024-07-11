@@ -22,7 +22,7 @@ const Board = () => {
         context.save(); 
         const roughCanvas = rough.canvas(canvas);
         elements.forEach((element) => {
-            if (element.type === "Pencil") {
+            if (element.type === "Pencil" || element.type === "Eraser") {
                 context.fillStyle = element.stroke;
                 context.fill(element.path);
                 context.restore();
