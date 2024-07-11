@@ -2,7 +2,6 @@ import React, { useReducer } from 'react'
 import ToolBoxContext from './toolbox-context';
 import { COLORS } from '../constant';
 
-
 const ToolBoxReducers=(state,action)=>{
     switch (action.type) {
       case "CHANGE_COLOR":
@@ -37,6 +36,10 @@ const ToolBoxReducers=(state,action)=>{
 }
 
 const InitialToolBoxState={
+    ["Pencil"]:{
+        stroke: COLORS.BLACK,
+        size: 100
+    },
     ["Line"]:{
         stroke: COLORS.BLACK,
         size:1

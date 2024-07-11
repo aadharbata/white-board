@@ -1,122 +1,134 @@
 import React, { useReducer } from 'react';
 import BoardContext from './board-context';
+import { getSvgPathFromStroke } from '../utils/CreateElement';
+import getStroke from 'perfect-freehand';
 import { CreateElement } from '../utils/CreateElement';
 
-const initialBoardstate = {
-  activetool: 'Line',
-  toolState: 'NONE',
-  elements: [],
+const initialBoardState = {
+    activetool: 'Line',
+    toolState: 'NONE',
+    elements: [],
 };
 
 const BoardReducers = (state, action) => {
-  switch (action.type) {
-    case 'CHANGE_TOOL': {
-      return {
-        ...state,
-        activetool: action.payload.tool,
-      };
+    switch (action.type) {
+        case 'CHANGE_TOOL':
+            return {
+                ...state,
+                activetool: action.payload.tool,
+            };
+        case 'DROP_DOWN': {
+            const { clientX, clientY, toolbox } = action.payload;
+            const type = {
+                type: state.activetool,
+                stroke: toolbox[state.activetool]?.stroke,
+                fill: toolbox[state.activetool]?.fill,
+                size: toolbox[state.activetool]?.size
+            };
+            const newElement = CreateElement(
+                state.elements.length,
+                clientX,
+                clientY,
+                clientX,
+                clientY,
+                type
+            );
+            return {
+                ...state,
+                toolState: 'DRAWING',
+                elements: [...state.elements, newElement],
+            };
+        }
+        case 'MOUSE_MOVE': {
+            const { clientX, clientY, toolbox } = action.payload;
+            const newElements = [...state.elements];
+            const index = state.elements.length - 1;
+            const { x1, y1 } = newElements[index];
+            if (state.activetool === "Pencil") {
+                newElements[index].points = [
+                    ...newElements[index].points,
+                    { x: clientX, y: clientY }
+                ];
+                newElements[index].path = new Path2D(
+                    getSvgPathFromStroke(getStroke(newElements[index].points))
+                );
+                return {
+                    ...state,
+                    elements: newElements
+                };
+            } else {
+                const newElement = CreateElement(index, x1, y1, clientX, clientY, {
+                    type: state.activetool,
+                    stroke: toolbox[state.activetool]?.stroke,
+                    fill: toolbox[state.activetool]?.fill,
+                    size: toolbox[state.activetool]?.size
+                });
+                newElements[index] = newElement;
+                return {
+                    ...state,
+                    elements: newElements,
+                };
+            }
+        }
+        case 'MOUSE_UP':
+            return {
+                ...state,
+                toolState: 'NONE',
+            };
+        default:
+            return state;
     }
-    case 'DROP_DOWN': {
-      const { clientX, clientY, toolbox } = action.payload;
-      console.log(toolbox);
-      const type = {
-        type: state.activetool,
-        stroke: toolbox[state.activetool]?.stroke,
-        fill : toolbox[state.activetool]?.fill,
-        size: toolbox[state.activetool]?.size
-      };
-      const newElement = CreateElement(
-        state.elements.length,
-        clientX,
-        clientY,
-        clientX,
-        clientY,
-        type
-      );
-      return {
-        ...state,
-        toolState: 'DRAWING',
-        elements: [...state.elements, newElement],
-      };
-    }
-    case 'MOUSE_MOVE': {
-      const { clientX, clientY, toolbox } = action.payload;
-      console.log(toolbox);
-      const newElements = [...state.elements];
-      const index = state.elements.length - 1;
-      const { x1, y1 } = newElements[index];
-      const newElement = CreateElement(index, x1, y1, clientX, clientY, {
-        type: state.activetool,
-        stroke: toolbox[state.activetool]?.stroke,
-        fill: toolbox[state.activetool]?.fill,
-        size: toolbox[state.activetool]?.size
-      });
-      newElements[index] = newElement;
-      return {
-        ...state,
-        elements: newElements,
-      };
-    }
-    case 'MOUSE_UP': {
-      return {
-        ...state,
-        toolState: 'NONE',
-      };
-    }
-    default:
-      return state;
-  }
 };
 
 const BoardContextProvider = ({ children }) => {
-  const [BoardState, dispatchBoardActions] = useReducer(BoardReducers, initialBoardstate);
+    const [BoardState, dispatchBoardActions] = useReducer(BoardReducers, initialBoardState);
 
-  const setActiveTool = (tool) => {
-    dispatchBoardActions({
-      type: 'CHANGE_TOOL',
-      payload: { tool },
-    });
-  };
+    const setActiveTool = (tool) => {
+        dispatchBoardActions({
+            type: 'CHANGE_TOOL',
+            payload: { tool },
+        });
+    };
 
-  const BoardMouseDownHandler = (event, toolbox) => {
-    const { clientX, clientY } = event;
+    const BoardMouseDownHandler = (event, toolbox) => {
+        const { clientX, clientY } = event;
 
-    dispatchBoardActions({
-      type: 'DROP_DOWN',
-      payload: { clientX, clientY, toolbox },
-    });
-  };
+        dispatchBoardActions({
+            type: 'DROP_DOWN',
+            payload: { clientX, clientY, toolbox },
+        });
+    };
 
-  const BoardMouseMoveHandler = (event, toolbox) => {
-    const { clientX, clientY } = event;
-    console.log(toolbox);
-    dispatchBoardActions({
-      type: 'MOUSE_MOVE',
-      payload: { clientX, clientY, toolbox },
-    });
-  };
+    const BoardMouseMoveHandler = (event, toolbox) => {
+        const { clientX, clientY } = event;
+        console.log(toolbox);
+        dispatchBoardActions({
+            type: 'MOUSE_MOVE',
+            payload: { clientX, clientY, toolbox },
+        });
+    };
 
-  const BoardMouseUpHandler = () => {
-    dispatchBoardActions({
-      type: 'MOUSE_UP',
-    });
-  };
+    const BoardMouseUpHandler = () => {
+        dispatchBoardActions({
+            type: 'MOUSE_UP',
+        });
+    };
 
-  const BoardContextValue = {
-    active_tool: BoardState.activetool,
-    toolState: BoardState.toolState,
-    elements: BoardState.elements,
-    handleActiveTool: setActiveTool,
-    BoardMouseDownHandler: BoardMouseDownHandler,
-    BoardMouseMoveHandler: BoardMouseMoveHandler,
-    BoardMouseUpHandler: BoardMouseUpHandler,
-  };
+    const BoardContextValue = {
+        active_tool: BoardState.activetool,
+        toolState: BoardState.toolState,
+        elements: BoardState.elements,
+        handleActiveTool: setActiveTool,
+        BoardMouseDownHandler: BoardMouseDownHandler,
+        BoardMouseMoveHandler: BoardMouseMoveHandler,
+        BoardMouseUpHandler: BoardMouseUpHandler,
+    };
 
-  return (
-    <BoardContext.Provider value={BoardContextValue}>
-      {children}
-    </BoardContext.Provider>
-  );
+    return (
+        <BoardContext.Provider value={BoardContextValue}>
+            {children}
+        </BoardContext.Provider>
+    );
 };
 
 export default BoardContextProvider;

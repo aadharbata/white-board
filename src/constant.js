@@ -20,7 +20,7 @@ const toolItems = [
 
 export default toolItems;
 
-export const STROKE_ACTIONS=["Line","Rectangle","Circle","Arrow"];
+export const STROKE_ACTIONS=["Line","Rectangle","Circle","Arrow","Pencil"];
 
 export const FILL_COLOR=["Rectangle","Circle"];
 export const boardActions={
