@@ -59,7 +59,7 @@ const Board = ({download,set}) => {
                     context.textBaseline = "top";
                     context.font = `${element.size}px Caveat`;
                     context.fillStyle = element.stroke;
-                    context.fillText(element.text, element.x1, element.y1+11);
+                    context.fillText(element.text, element.x1, element.y1-10);
                     context.restore();
                     break;
                 }
@@ -125,7 +125,7 @@ const Board = ({download,set}) => {
         <textarea ref={TextAreaRef}
         className={classes.textElementBox}
         style={{
-            top: elements[elements.length - 1].y1,
+            top: elements[elements.length - 1].y1-20,
             left: elements[elements.length - 1].x1,
             fontSize: `${elements[elements.length - 1]?.size}px`,
             color: elements[elements.length - 1]?.stroke,
