@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer } from 'react';
 import BoardContext from './board-context';
 import { getSvgPathFromStroke } from '../utils/CreateElement';
 import getStroke from 'perfect-freehand';
@@ -191,16 +191,16 @@ const BoardContextProvider = ({ children }) => {
         });
       };
 
-    const UndoHandler=()=>{
+    const UndoHandler=useCallback(()=>{
         dispatchBoardActions({
             type:"Undo"
-        })
-    }
-    const RedoHandler=()=>{
+        });
+    },);
+    const RedoHandler=useCallback(()=>{
         dispatchBoardActions({
             type:"Redo"
-        })
-    }
+        });
+    },[]);
 
     const BoardContextValue = {
         active_tool: BoardState.activetool,

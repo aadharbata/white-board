@@ -10,7 +10,7 @@ const Board = ({download,set}) => {
 
     const TextAreaRef=useRef();
     const canvasRef = useRef();
-    const { elements, BoardMouseDownHandler, BoardMouseMoveHandler, toolState, BoardMouseUpHandler,textAreaBlurHandler } = useContext(BoardContext);
+    const { elements, BoardMouseDownHandler, BoardMouseMoveHandler, toolState, BoardMouseUpHandler,textAreaBlurHandler ,Undo,Redo} = useContext(BoardContext);
     const { ToolBoxState } = useContext(ToolBoxContext);
 
     useEffect(() => {
@@ -18,6 +18,22 @@ const Board = ({download,set}) => {
         canvas.height = window.innerHeight;
         canvas.width = window.innerWidth;     
     }, []);
+
+    useEffect(() => {
+        function handleKeyDown(event) {
+          if (event.ctrlKey && event.key === "z") {
+            Undo();
+          } else if (event.ctrlKey && event.key === "y") {
+            Redo();
+          }
+        }
+    
+        document.addEventListener("keydown", handleKeyDown);
+    
+        return () => {
+          document.removeEventListener("keydown", handleKeyDown);
+        };
+      }, [Undo, Redo]);
 
     useLayoutEffect(() => {
         const canvas = canvasRef.current; 
