@@ -36,7 +36,7 @@ const BoardReducers = (state, action) => {
             );
             return {
                 ...state,
-                toolState: 'DRAWING',
+                toolState: state.activetool==="Text"? 'WRITING' : "DRAWING",
                 elements: [...state.elements, newElement],
             };
         }
@@ -84,6 +84,16 @@ const BoardReducers = (state, action) => {
                 ...state,
                 toolState: 'NONE',
             };
+        case "CHANGE_TEXT": {
+                const index = state.elements.length - 1;
+                const newElements = [...state.elements];
+                newElements[index].text = action.payload.text;
+                return {
+                  ...state,
+                  toolState: "NONE",
+                  elements: newElements,
+                };
+        }
         default:
             return state;
     }
@@ -100,6 +110,8 @@ const BoardContextProvider = ({ children }) => {
     };
 
     const BoardMouseDownHandler = (event, toolbox) => {
+        if(BoardState.toolState==="WRITING") return;
+
         const { clientX, clientY } = event;
 
         dispatchBoardActions({
@@ -109,6 +121,7 @@ const BoardContextProvider = ({ children }) => {
     };
 
     const BoardMouseMoveHandler = (event, toolbox) => {
+        if(BoardState.toolState==="WRITING") return;
         const { clientX, clientY } = event;
         dispatchBoardActions({
             type: 'MOUSE_MOVE',
@@ -117,10 +130,20 @@ const BoardContextProvider = ({ children }) => {
     };
 
     const BoardMouseUpHandler = () => {
+        if(BoardState.toolState==="WRITING") return;
         dispatchBoardActions({
             type: 'MOUSE_UP',
         });
     };
+
+    const textAreaBlurHandler = (text) => {
+      dispatchBoardActions({
+          type:"CHANGE_TEXT",
+          payload: {
+            text,
+          },
+        });
+      };
 
     const BoardContextValue = {
         active_tool: BoardState.activetool,
@@ -130,6 +153,7 @@ const BoardContextProvider = ({ children }) => {
         BoardMouseDownHandler: BoardMouseDownHandler,
         BoardMouseMoveHandler: BoardMouseMoveHandler,
         BoardMouseUpHandler: BoardMouseUpHandler,
+        textAreaBlurHandler: textAreaBlurHandler
     };
 
     return (

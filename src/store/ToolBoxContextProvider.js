@@ -63,6 +63,11 @@ const InitialToolBoxState={
         stroke: COLORS.WHITE,
         fill: null,
         size: 1
+    },
+    ["Text"]:{
+        stroke: COLORS.BLACK,
+        fill: null,
+        size: 32
     }
 };
 

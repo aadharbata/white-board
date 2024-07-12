@@ -21,7 +21,7 @@ const Toolbox = () => {
      <div className={classes.container}>
       {STROKE_ACTIONS.includes(active_tool) &&<div className={classes.selectOptionContainer}>
         
-        <div className={classes.toolBoxLabel}>Stroke</div>
+        <div className={classes.toolBoxLabel}>Stroke Color</div>
         <div className={classes.colorsContainer}>
           {Object.keys(COLORS).map((k) => {
             return (
@@ -40,7 +40,7 @@ const Toolbox = () => {
       }
       {FILL_COLOR.includes(active_tool) &&<div className={classes.selectOptionContainer}>
         
-        <div className={classes.toolBoxLabel}>FILL</div>
+        <div className={classes.toolBoxLabel}>FILL Color</div>
         <div className={classes.colorsContainer}>
           {Object.keys(COLORS).map((k) => {
             return (
@@ -59,11 +59,11 @@ const Toolbox = () => {
       }
       {SIZE_TOOL.includes(active_tool) && (
         <div className={classes.selectOptionContainer}>
-          <div className={classes.toolBoxLabel}>Brush Size</div>
+          <div className={classes.toolBoxLabel}>{active_tool==="Text"?"Font Size":"Brush Size"}</div>
           <input
             type="range"
-            min={1}
-            max={10}
+            min={active_tool === "Text" ? 12 : 1}
+            max={active_tool === "Text" ? 64 : 10}
             step={1}
             value={size}
             onChange={(event)=>ChangeSizeTool(active_tool,event.target.value)}

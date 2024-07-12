@@ -1,28 +1,23 @@
 import { FaSlash, FaRegCircle, FaLongArrowAltRight,FaPaintBrush } from 'react-icons/fa';
 import { LuRectangleHorizontal } from 'react-icons/lu';
-import { MdOutlineFormatColorText } from 'react-icons/md';
 import { FaEraser } from 'react-icons/fa6';
-import { IoMdUndo, IoMdRedo } from 'react-icons/io';
-
+import { MdOutlineFormatColorText } from "react-icons/md";
 const toolItems = [
     { item: 'Pencil', element: FaPaintBrush },
     { item: 'Line', element: FaSlash },
     { item: 'Rectangle', element: LuRectangleHorizontal },
     { item: 'Circle', element: FaRegCircle },
     { item: 'Arrow', element: FaLongArrowAltRight },
-    { item: 'Text', element: MdOutlineFormatColorText },
     { item: 'Eraser', element: FaEraser },
-    { item: 'Undo', element: IoMdUndo },
-    { item: 'Redo', element: IoMdRedo }
+    {item: 'Text', element:MdOutlineFormatColorText }
   ];
 
 export default toolItems;
 
-export const STROKE_ACTIONS=["Line","Rectangle","Circle","Arrow","Pencil"];
+export const STROKE_ACTIONS=["Line","Rectangle","Circle","Arrow","Pencil","Text"];
 
 export const FILL_COLOR=["Rectangle","Circle"];
 export const boardActions={
-
      MOUSE_DOWN:"MOUSE_DOWN",
      MOUSE_UP: "MOUSE_UP",
      CHANGE_TOOL:"CHANGE_TOOL"
@@ -37,6 +32,6 @@ export const COLORS = {
   WHITE: "#ffffff",
 };
 
-export const SIZE_TOOL=["Line","Rectangle","Circle","Arrow"];
+export const SIZE_TOOL=["Line","Rectangle","Circle","Arrow","Text"];
 
-export const TOOL_BOX=["Line","Rectangle","Circle","Arrow","Pencil"];
+export const TOOL_BOX=["Line","Rectangle","Circle","Arrow","Pencil","Text"];

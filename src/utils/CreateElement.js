@@ -11,6 +11,10 @@ export const CreateElement = (id, x1, y1, x2, y2, { type,stroke,fill,size }) => 
     y1,
     x2,
     y2,
+    type,
+    stroke,
+    fill,
+    size
   };
   let options = {
     seed: id + 1, 
@@ -58,6 +62,10 @@ export const CreateElement = (id, x1, y1, x2, y2, { type,stroke,fill,size }) => 
         const {x3,y3,x4,y4}=getArrowHeadsCoordinates(x1,y1,x2,y2);
         const points=[[x1,y1],[x2,y2],[x3,y3],[x2,y2],[x4,y4]];
         element.roughElement=gen.linearPath(points,options);
+        return element;
+    }
+    case "Text":{
+        element.text=""
         return element;
     }
     default:

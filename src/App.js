@@ -16,7 +16,6 @@ function App() {
   }
   return (
     <div className="App">
-       
       <BoardContextProvider>
       <ToolBoxContextProvider>
             <Toolbar download={download}/>
