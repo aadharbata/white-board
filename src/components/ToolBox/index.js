@@ -23,6 +23,14 @@ const Toolbox = () => {
         
         <div className={classes.toolBoxLabel}>Stroke Color</div>
         <div className={classes.colorsContainer}>
+        <div>
+              <input
+                className={classes.colorPicker}
+                type="color"
+                value={strokeColor}
+                onChange={(e) => ColorStrokeTool(active_tool, e.target.value)}
+              ></input>
+        </div>
           {Object.keys(COLORS).map((k) => {
             return (
               <div
@@ -42,6 +50,15 @@ const Toolbox = () => {
         
         <div className={classes.toolBoxLabel}>FILL Color</div>
         <div className={classes.colorsContainer}>
+        <div>
+              <input
+                className={classes.colorPicker}
+                type="color"
+                value={FillColor}
+                onChange={(e) => ColorFillTool(active_tool, e.target.value)}
+              ></input>
+        </div>
+          
           {Object.keys(COLORS).map((k) => {
             return (
               <div
