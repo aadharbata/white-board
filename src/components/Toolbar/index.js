@@ -4,10 +4,11 @@ import toolItems from '../../constant';
 import cx from 'classnames';
 import BoardContext from '../../store/board-context';
 import { FaDownload } from "react-icons/fa";
+import { IoMdUndo ,IoMdRedo} from "react-icons/io";
 
 const Toolbar = ({download}) => {
   
-  const {active_tool,handleActiveTool}=useContext(BoardContext);
+  const {active_tool,handleActiveTool,Undo,Redo}=useContext(BoardContext);
 
   return (
     <div className={classes.ToolbarContainer}>
@@ -22,7 +23,14 @@ const Toolbar = ({download}) => {
             <IconComponent />
           </div>
         );
-      })}
+      })}   
+
+          <div className={classes.Toolbaritem} onClick={()=>Undo()}>
+            <IoMdUndo/>
+          </div>
+          <div className={classes.Toolbaritem} onClick={()=>Redo()}>
+            <IoMdRedo/>
+          </div>
           <div className={classes.Toolbaritem} onClick={()=>download()}>
             <FaDownload/>
           </div>

@@ -7,6 +7,8 @@ import { CreateElement } from '../utils/CreateElement';
 const initialBoardState = {
     activetool: 'Pencil',
     toolState: 'NONE',
+    history:[[]],
+    index:0,
     elements: [],
 };
 
@@ -88,11 +90,50 @@ const BoardReducers = (state, action) => {
                 const index = state.elements.length - 1;
                 const newElements = [...state.elements];
                 newElements[index].text = action.payload.text;
+                const newElement=[...state.elements];
+                const newHistory=state.history.slice(0,state.index+1);
+                newHistory.push(newElement);
                 return {
                   ...state,
                   toolState: "NONE",
                   elements: newElements,
+                  history: newHistory,
+                  index: state.index+1
                 };
+        }
+        case "SAVE":{
+            const newElements=[...state.elements];
+            const newHistory=state.history.slice(0,state.index+1);
+            newHistory.push(newElements);
+            return {
+                ...state,
+                history: newHistory,
+                index: state.index+1,
+            }
+        }
+        case "Undo":{
+            if(state.index===0) {
+                return{
+                    ...state
+                }
+            }
+            return {
+                ...state,
+                elements: state.history[state.index-1],
+                index: state.index-1
+            }
+        }
+        case "Redo":{
+            if(state.index>=state.history.length-1) {
+                return {
+                    ...state
+                }
+            }
+            return{
+                ...state,
+                elements: state.history[state.index+1],
+                index: state.index+1
+            }
         }
         default:
             return state;
@@ -131,6 +172,11 @@ const BoardContextProvider = ({ children }) => {
 
     const BoardMouseUpHandler = () => {
         if(BoardState.toolState==="WRITING") return;
+        if(BoardState.toolState==="DRAWING"){
+            dispatchBoardActions({
+                type:"SAVE"
+            })
+        }
         dispatchBoardActions({
             type: 'MOUSE_UP',
         });
@@ -145,6 +191,17 @@ const BoardContextProvider = ({ children }) => {
         });
       };
 
+    const UndoHandler=()=>{
+        dispatchBoardActions({
+            type:"Undo"
+        })
+    }
+    const RedoHandler=()=>{
+        dispatchBoardActions({
+            type:"Redo"
+        })
+    }
+
     const BoardContextValue = {
         active_tool: BoardState.activetool,
         toolState: BoardState.toolState,
@@ -153,7 +210,9 @@ const BoardContextProvider = ({ children }) => {
         BoardMouseDownHandler: BoardMouseDownHandler,
         BoardMouseMoveHandler: BoardMouseMoveHandler,
         BoardMouseUpHandler: BoardMouseUpHandler,
-        textAreaBlurHandler: textAreaBlurHandler
+        textAreaBlurHandler: textAreaBlurHandler,
+        Undo: UndoHandler,
+        Redo: RedoHandler
     };
 
     return (

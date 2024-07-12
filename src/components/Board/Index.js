@@ -43,7 +43,7 @@ const Board = ({download,set}) => {
                     context.textBaseline = "top";
                     context.font = `${element.size}px Caveat`;
                     context.fillStyle = element.stroke;
-                    context.fillText(element.text, element.x1, element.y1);
+                    context.fillText(element.text, element.x1, element.y1+11);
                     context.restore();
                     break;
                 }
