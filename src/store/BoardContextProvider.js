@@ -54,7 +54,7 @@ const BoardReducers = (state, action) => {
                     { x: clientX, y: clientY }
                 ];
                 newElements[index].path = new Path2D(
-                    getSvgPathFromStroke(getStroke(newElements[index].points))
+                    getSvgPathFromStroke(getStroke(newElements[index].points,{size: toolbox["Pencil"].size}))
                 );
             } 
             else if(state.activetool==="Eraser"){
@@ -63,7 +63,7 @@ const BoardReducers = (state, action) => {
                 { x: clientX, y: clientY }
             ];
             newElements[index].path = new Path2D(
-                getSvgPathFromStroke(getStroke(newElements[index].points,{size:50}))
+                getSvgPathFromStroke(getStroke(newElements[index].points,{size: toolbox["Eraser"].size}))
             );
             } 
             else {

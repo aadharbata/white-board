@@ -33,7 +33,7 @@ export const CreateElement = (id, x1, y1, x2, y2, { type,stroke,fill,size }) => 
       const brushElement = {
         id,
         points: [{ x: x1, y: y1 }],
-        path: new Path2D(getSvgPathFromStroke(getStroke([{ x: x1, y: y1 }]))),
+        path: new Path2D(getSvgPathFromStroke(getStroke([{ x: x1, y: y1 }],{size: size}))),
         type,
         stroke
       };
@@ -43,7 +43,7 @@ export const CreateElement = (id, x1, y1, x2, y2, { type,stroke,fill,size }) => 
       const eraseElement = {
         id,
         points: [{ x: x1, y: y1 }],
-        path: new Path2D(getSvgPathFromStroke(getStroke([{ x: x1, y: y1 }],{size:50}))),
+        path: new Path2D(getSvgPathFromStroke(getStroke([{ x: x1, y: y1 }],{size:size}))),
         type,
         stroke
       };

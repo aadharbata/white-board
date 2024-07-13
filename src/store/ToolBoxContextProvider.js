@@ -38,7 +38,8 @@ const ToolBoxReducers=(state,action)=>{
 const InitialToolBoxState={
     ["Pencil"]:{
         stroke: COLORS.BLACK,
-        size: 100
+        fill: null,
+        size: 20
     },
     ["Line"]:{
         stroke: COLORS.BLACK,
@@ -62,7 +63,7 @@ const InitialToolBoxState={
     ["Eraser"]:{
         stroke: COLORS.WHITE,
         fill: null,
-        size: 1
+        size: 50
     },
     ["Text"]:{
         stroke: COLORS.BLACK,
