@@ -1,35 +1,36 @@
-# Whiteboard React App
+# Whiteboard App
 
-Welcome to the Whiteboard React App! This application provides an interactive drawing experience with various features and customization options.
+Welcome to Whiteboard, a React application for creating diagrams and sketches with various tools like brush, line, rectangle, circle, arrow, text, eraser, undo/redo functionalities, and more. This app utilizes several external libraries for enhanced functionality.
 
 ## Features
 
-- **Brush Tool**: Draw freehand with customizable brush size and color.
-- **Line Tool**: Draw straight lines with adjustable stroke color and width.
-- **Rectangle Tool**: Draw rectangles with configurable stroke color, fill color, and size.
-- **Circle Tool**: Draw circles with options to set stroke color, fill color, and size.
-- **Arrow Tool**: Draw arrows with customizable color and stroke width.
-- **Eraser Tool**: Erase parts of your drawing with an adjustable eraser size.
-- **Text Tool**: Add text to the canvas using the Caveat font from Google Fonts.
-- **Undo/Redo**: Undo or redo actions, accessible via buttons or keyboard shortcuts.
-- **Download**: Download your canvas as a PNG image using the download button.
-- **Dynamic Color Picker**: Select any color dynamically for drawing tools.
+- **Brush Tool:** Customize brush size and color.
+- **Line Tool:** Choose stroke color and width for drawing lines.
+- **Rectangle Tool:** Draw rectangles with adjustable stroke and fill colors, and size.
+- **Circle Tool:** Create circles with customizable stroke, fill colors, and size.
+- **Arrow Tool:** Make arrows in any color with adjustable stroke width.
+- **Eraser Tool:** Erase parts of your drawing with adjustable size.
+- **Text Tool:** Write text using the Caveat font from Google Fonts.
+- **Undo/Redo:** Easily undo or redo actions, with support for keyboard shortcuts.
+- **Download:** Download your canvas as a PNG image.
+- **Color Picker:** Dynamically pick any color for drawing tools.
 
 ## Libraries Used
 
-- **Perfect-Freehand**: Provides a smooth, freehand brush experience.
-- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
-- **RoughJS**: Creates sketchy, hand-drawn-like graphics.
-- **html2canvas**: Renders HTML elements to canvas, enabling canvas download functionality.
+- **Perfect-freehand:** Used for realistic brush strokes.
+- **Tailwind CSS:** Provides utility-first CSS for styling.
+- **RoughJS:** Adds a rough pencil effect to drawings.
+- **html2canvas:** Enables canvas export to PNG format.
 
-## Getting Started
+## Deployment
 
-### Prerequisites
+This app is deployed on Vercel and can be accessed at [https://asrwhiteboard.vercel.app/](https://asrwhiteboard.vercel.app/).
 
-- Node.js and npm installed on your machine.
+## Running Locally
 
-### Installation
+To run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/whiteboard-react-app.git
+   git clone <repository-url>
+   cd whiteboard
