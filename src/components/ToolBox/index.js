@@ -71,7 +71,7 @@ const Toolbox = () => {
                 <div
                   key={k}
                   className={cx(classes.colorBox, {
-                    [classes.activeColorBox]: FILL_COLOR === COLORS[k],
+                    [classes.activeColorBox]: FillColor === COLORS[k],
                   })}
                   style={{ backgroundColor: COLORS[k] }}
                   onClick={() =>ColorFillTool(active_tool, COLORS[k])}
