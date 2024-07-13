@@ -61,7 +61,7 @@ const InitialToolBoxState={
         size: 1
     },
     ["Eraser"]:{
-        stroke: "ffffff",
+        stroke: COLORS.WHITE,
         fill: null,
         size: 50
     },
