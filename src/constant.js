@@ -28,8 +28,7 @@ export const COLORS = {
   GREEN: "#00ff00",
   BLUE: "#0000ff",
   ORANGE: "#ffa500",
-  YELLOW: "#ffff00",
-    WHITE: "#ffffff"
+  YELLOW: "#ffff00"
 };
 
 export const SIZE_TOOL=["Line","Rectangle","Circle","Arrow","Text","Pencil","Eraser"];
